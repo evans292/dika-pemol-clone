@@ -12,6 +12,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            backgroundImage: theme => ({
+                'hero': "url('http://127.0.0.1:8000/img/f06.png')",
+            })
         },
     },
 
