@@ -9,17 +9,14 @@
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" novalidate>
             @csrf
 
             <!-- Email Address -->
             <div>
                 <x-label-login for="username" :value="__('Username')" />
-
                 <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus />
+                <x-validation-message name="username"/>
             </div>
 
             <!-- Password -->
@@ -30,6 +27,7 @@
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
+                                <x-validation-message name="password"/>
             </div>
 
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Sales;
 
-use App\Http\Controllers\Controller;
 use App\Models\Data;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class DataController extends Controller
 {
@@ -13,10 +15,22 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('data.index');
+        $datas = null;
+        if ($request->tgl1 !== null) {
+            $datas = Data::whereBetween('tanggal', [$request->tgl1, $request->tgl2])->paginate(10);
+        } else if ($request->key !== null) {
+            $datas =  DB::table('data')
+                    ->join('users', 'users.id', '=', 'data.user_id')        
+                    ->where('no_rek', 'like', "%$request->key%")
+                    ->select('users.*', 'data.*')
+                    ->paginate(10);
+        } else {
+            $datas = Data::orderBy('created_at', 'desc')->paginate(10);
+        } 
+        return view('data.index', compact('datas'));
     }
 
     /**
@@ -27,6 +41,7 @@ class DataController extends Controller
     public function create()
     {
         //
+        return view('data.create');
     }
 
     /**
@@ -38,6 +53,17 @@ class DataController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'rekening' => 'required'
+        ]);
+
+        Data::create([
+            'no_rek' => $request->rekening,
+            'tanggal' => date('Y-m-d'),
+            'user_id' => Auth::user()->id
+        ]);
+
+        return redirect()->route('data.index')->with('success', 'lol');
     }
 
     /**
@@ -49,6 +75,7 @@ class DataController extends Controller
     public function show(Data $data)
     {
         //
+        return view('data.show', compact('data'));
     }
 
     /**

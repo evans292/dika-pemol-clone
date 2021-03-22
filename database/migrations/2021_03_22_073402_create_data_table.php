@@ -15,6 +15,9 @@ class CreateDataTable extends Migration
     {
         Schema::create('data', function (Blueprint $table) {
             $table->id();
+            $table->string('no_rek');
+            $table->date('tanggal');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

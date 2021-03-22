@@ -28,7 +28,7 @@ class AddIdFieldsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn('pemol_id');
+            $table->dropColumn('username');
         });
     }
 }
