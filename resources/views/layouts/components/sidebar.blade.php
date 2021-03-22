@@ -20,31 +20,7 @@
           </a>
           <ul class="md:hidden items-center flex flex-wrap list-none">
             <li class="inline-block relative">
-              <a
-                class="text-gray-600 block"
-                href="#pablo"
-                onclick="openDropdown(event,'user-responsive-dropdown')"
-                ></a>
-              <div
-                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                id="user-responsive-dropdown"
-              >
-              <x-responsive-nav-link href="#">
-                {{ __('Home') }}
-              </x-responsive-nav-link>
-              <x-responsive-nav-link href="#">
-                {{ __('Profile') }}
-              </x-responsive-nav-link>
-              <form method="POST" action="{{ route('logout') }}">
-                @csrf
-
-                <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-                    {{ __('Logout') }}
-                </x-responsive-nav-link>
-            </form>
-              </div>
+              
             </li>
           </ul>
           <div
@@ -115,7 +91,7 @@
   
             <ul class="md:flex-col md:min-w-full flex flex-col list-none">
               <li class="items-center">
-                <x-side-link href="#" active="">
+                <x-side-link :href="route('data.index')" :active="request()->routeIs('data.index')">
                   <i class="fas fa-calendar-alt mr-2 text-sm " ></i>
                   {{ __('Data Pemol') }}
                 </x-side-link>
