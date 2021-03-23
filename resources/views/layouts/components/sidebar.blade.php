@@ -98,7 +98,7 @@
               </li>
               
               <li class="items-center">
-                <x-side-link href="#" active="">
+                <x-side-link :href="route('data.id-card')" :active="request()->routeIs('data.id-card')">
                   <i class="fas fa-id-card mr-2 text-sm " ></i>
                   {{ __('Id Card') }}
                 </x-side-link>

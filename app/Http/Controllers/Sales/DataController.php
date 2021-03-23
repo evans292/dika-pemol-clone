@@ -111,4 +111,9 @@ class DataController extends Controller
     {
         //
     }
+
+    public function showIdCard()
+    {
+        return view('data.id-card');
+    }
 }

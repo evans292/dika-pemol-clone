@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Sales\DataController;
+use App\Models\Data;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,5 +26,9 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::resource('data', DataController::class);
+    Route::resource('data', DataController::class)->except([
+        'showIdCard'
+    ]);
+
+    Route::get('id-card', [DataController::class, 'showIdCard'])->name('data.id-card');
 });
