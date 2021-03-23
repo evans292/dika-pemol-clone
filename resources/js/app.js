@@ -4,6 +4,9 @@ require('alpinejs');
 
 import * as Popper from '@popperjs/core';
 
+import Vue from "vue";
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css'
 
 
 // ============= POPPER =====================================
@@ -29,3 +32,34 @@ window.toggleNavbar  = function (collapseID) {
     document.getElementById(dropdownID).classList.toggle("hidden");
     document.getElementById(dropdownID).classList.toggle("block");
     }
+
+// ============= VUE =====================================
+
+Vue.use(VueToast);
+
+window.greet = function(args, position = 'top') 
+{
+    Vue.$toast.success(`Halo ${args}!`, {
+        duration: 2000,
+        dismissible: true,
+        position: position
+       })    
+}
+
+window.success = function(args) 
+{
+    Vue.$toast.success(`${args}`, {
+        duration: 2000,
+        dismissible: true,
+        position: 'top-right'
+       })    
+}
+
+window.failed = function(args) 
+{
+    Vue.$toast.error(`${args}`, {
+        duration: 2000,
+        dismissible: true,
+        position: 'top-right'
+       })    
+}

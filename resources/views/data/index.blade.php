@@ -108,4 +108,14 @@
             </div>
         </div>
     </div>
+
+    <x-slot name="script">
+      @if (session('success'))
+          <script>
+              document.addEventListener('DOMContentLoaded', function() { 
+                  success("Input data pemol berhasil")
+              }, true); 
+          </script>
+       @endif
+  </x-slot>
 </x-main-layout>

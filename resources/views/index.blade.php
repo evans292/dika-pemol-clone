@@ -13,4 +13,14 @@
             </div>
         </div>
     </div>
+
+    <x-slot name="script">
+        @if (session('login'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() { 
+                    greet("{{ Auth::user()->name }}", 'bottom-right')
+                }, true); 
+            </script>
+         @endif
+    </x-slot>
 </x-main-layout>
