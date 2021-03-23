@@ -6827,14 +6827,16 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm.js");
-/* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-toast-notification */ "./node_modules/vue-toast-notification/dist/index.min.js");
-/* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_toast_notification__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_toast_notification_dist_theme_sugar_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-toast-notification/dist/theme-sugar.css */ "./node_modules/vue-toast-notification/dist/theme-sugar.css");
+/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
+/* harmony import */ var webcam_easy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! webcam-easy */ "./node_modules/webcam-easy/src/webcam-easy.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm.js");
+/* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-toast-notification */ "./node_modules/vue-toast-notification/dist/index.min.js");
+/* harmony import */ var vue_toast_notification__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_toast_notification__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_toast_notification_dist_theme_sugar_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-toast-notification/dist/theme-sugar.css */ "./node_modules/vue-toast-notification/dist/theme-sugar.css");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
+
 
 
 
@@ -6860,7 +6862,7 @@ window.openDropdown = function (event, dropdownID) {
     element = element.parentNode;
   }
 
-  _popperjs_core__WEBPACK_IMPORTED_MODULE_2__.createPopper(element, document.getElementById(dropdownID), {
+  _popperjs_core__WEBPACK_IMPORTED_MODULE_3__.createPopper(element, document.getElementById(dropdownID), {
     placement: "bottom-start"
   });
   document.getElementById(dropdownID).classList.toggle("hidden");
@@ -6868,11 +6870,11 @@ window.openDropdown = function (event, dropdownID) {
 }; // ============= VUE =====================================
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.use((vue_toast_notification__WEBPACK_IMPORTED_MODULE_0___default()));
+vue__WEBPACK_IMPORTED_MODULE_4__.default.use((vue_toast_notification__WEBPACK_IMPORTED_MODULE_1___default()));
 
 window.greet = function (args) {
   var position = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'top';
-  vue__WEBPACK_IMPORTED_MODULE_3__.default.$toast.success("Halo ".concat(args, "!"), {
+  vue__WEBPACK_IMPORTED_MODULE_4__.default.$toast.success("Halo ".concat(args, "!"), {
     duration: 2000,
     dismissible: true,
     position: position
@@ -6880,7 +6882,7 @@ window.greet = function (args) {
 };
 
 window.success = function (args) {
-  vue__WEBPACK_IMPORTED_MODULE_3__.default.$toast.success("".concat(args), {
+  vue__WEBPACK_IMPORTED_MODULE_4__.default.$toast.success("".concat(args), {
     duration: 2000,
     dismissible: true,
     position: 'top-right'
@@ -6888,10 +6890,40 @@ window.success = function (args) {
 };
 
 window.failed = function (args) {
-  vue__WEBPACK_IMPORTED_MODULE_3__.default.$toast.error("".concat(args), {
+  vue__WEBPACK_IMPORTED_MODULE_4__.default.$toast.error("".concat(args), {
     duration: 2000,
     dismissible: true,
     position: 'top-right'
+  });
+}; // ============= WEBCAM EASY =====================================
+
+
+var webcamElement = document.getElementById('webcam');
+var canvasElement = document.getElementById('canvas');
+var snapSoundElement = document.getElementById('snapSound');
+var webcam = new webcam_easy__WEBPACK_IMPORTED_MODULE_0__.default(webcamElement, 'user', canvasElement, snapSoundElement);
+
+window.start = function (args) {
+  webcam.start().then(function (result) {
+    console.log("webcam started");
+  })["catch"](function (err) {
+    console.log(err);
+  });
+};
+
+window.capture = function (args) {
+  var picture = webcam.snap();
+  document.querySelector('#pic').src = picture;
+};
+
+window.stop = function (args) {
+  webcam.stop();
+};
+
+window.save = function (params) {
+  var base64image = document.getElementById("pic").src;
+  webcam_easy__WEBPACK_IMPORTED_MODULE_0__.default.upload(base64image, "{{ route('presence.snap') }}", function (code, text) {
+    console.log('Save successfully'); //console.log(text);
   });
 };
 
@@ -33228,6 +33260,205 @@ if (inBrowser) {
 /*  */
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Vue);
+
+
+/***/ }),
+
+/***/ "./node_modules/webcam-easy/src/webcam-easy.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/webcam-easy/src/webcam-easy.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Webcam)
+/* harmony export */ });
+class Webcam {
+    constructor(webcamElement, facingMode = 'user', canvasElement = null, snapSoundElement = null) {
+      this._webcamElement = webcamElement;
+      this._webcamElement.width = this._webcamElement.width || 640;
+      this._webcamElement.height = this._webcamElement.height || this._webcamElement.width * (3 / 4);
+      this._facingMode = facingMode;
+      this._webcamList = [];
+      this._streamList = [];
+      this._selectedDeviceId = '';
+      this._canvasElement = canvasElement;
+      this._snapSoundElement = snapSoundElement;
+    }
+
+    get facingMode(){
+      return this._facingMode;
+    }
+
+    set facingMode(value){
+      this._facingMode = value;
+    }
+
+    get webcamList(){
+      return this._webcamList;
+    }
+
+    get webcamCount(){
+      return this._webcamList.length;
+    }
+
+    get selectedDeviceId(){
+      return this._selectedDeviceId;
+    }
+
+    /* Get all video input devices info */
+    getVideoInputs(mediaDevices){
+      this._webcamList = [];
+      mediaDevices.forEach(mediaDevice => {
+        if (mediaDevice.kind === 'videoinput') {
+          this._webcamList.push(mediaDevice);
+        }
+      });
+      if(this._webcamList.length == 1){
+        this._facingMode = 'user';
+      }    
+      return this._webcamList;
+    }
+
+    /* Get media constraints */
+    getMediaConstraints() {
+        var videoConstraints = {};
+        if (this._selectedDeviceId == '') {
+            videoConstraints.facingMode =  this._facingMode;
+        } else {
+            videoConstraints.deviceId = { exact: this._selectedDeviceId};
+        }
+        var constraints = {
+            video: videoConstraints,
+            audio: false
+        };
+        return constraints;
+    }
+
+    /* Select camera based on facingMode */ 
+    selectCamera(){
+      for(let webcam of this._webcamList){
+        if(   (this._facingMode=='user' && webcam.label.toLowerCase().includes('front'))
+          ||  (this._facingMode=='enviroment' && webcam.label.toLowerCase().includes('back'))
+        )
+        {
+          this._selectedDeviceId = webcam.deviceId;
+          break;
+        }
+      }
+    }
+
+    /* Change Facing mode and selected camera */ 
+    flip(){
+      this._facingMode = (this._facingMode == 'user')? 'enviroment': 'user';
+      this._webcamElement.style.transform = "";
+      this.selectCamera();  
+    }
+
+    /*
+      1. Get permission from user
+      2. Get all video input devices info
+      3. Select camera based on facingMode 
+      4. Start stream
+    */
+    async start(startStream = true) {
+      return new Promise((resolve, reject) => {         
+        this.stop();
+        navigator.mediaDevices.getUserMedia(this.getMediaConstraints()) //get permisson from user
+          .then(stream => {
+            this._streamList.push(stream);
+            this.info() //get all video input devices info
+              .then(webcams =>{
+                this.selectCamera();   //select camera based on facingMode
+                if(startStream){
+                    this.stream()
+                        .then(facingMode =>{
+                            resolve(this._facingMode);
+                        })
+                        .catch(error => {
+                            reject(error);
+                        });
+                }else{
+                    resolve(this._selectedDeviceId);
+                }
+              }) 
+              .catch(error => {
+                reject(error);
+              });
+          })
+          .catch(error => {
+              reject(error);
+          });
+      });
+    }
+
+    /* Get all video input devices info */ 
+    async info(){
+      return new Promise((resolve, reject) => {            
+        navigator.mediaDevices.enumerateDevices()
+          .then(devices =>{
+            this.getVideoInputs(devices);
+            resolve(this._webcamList);
+          }) 
+          .catch(error => {
+            reject(error);
+          });
+      });
+    }
+  
+    /* Start streaming webcam to video element */ 
+    async stream() {
+      return new Promise((resolve, reject) => {         
+        navigator.mediaDevices.getUserMedia(this.getMediaConstraints())
+          .then(stream => {
+              this._streamList.push(stream);
+              this._webcamElement.srcObject = stream;
+              if(this._facingMode == 'user'){
+                this._webcamElement.style.transform = "scale(-1,1)";
+              }
+              this._webcamElement.play();
+              resolve(this._facingMode);
+          })
+          .catch(error => {
+              console.log(error);
+              reject(error);
+          });
+      });
+    }
+
+    /* Stop streaming webcam */ 
+    stop() {
+      this._streamList.forEach(stream => {
+        stream.getTracks().forEach(track => {
+          track.stop();
+        });
+      });   
+    }
+
+    snap() {
+      if(this._canvasElement!=null){
+        if(this._snapSoundElement!= null){
+          this._snapSoundElement.play();
+        }
+        this._canvasElement.height = this._webcamElement.scrollHeight;
+        this._canvasElement.width = this._webcamElement.scrollWidth;
+        let context = this._canvasElement.getContext('2d');
+        if(this._facingMode == 'user'){
+          context.translate(this._canvasElement.width, 0);
+          context.scale(-1, 1);
+        }
+        context.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
+        context.drawImage(this._webcamElement, 0, 0, this._canvasElement.width, this._canvasElement.height);
+        let data = this._canvasElement.toDataURL('image/png');
+        return data;
+      }
+      else{
+        throw "canvas element is missing";
+      }
+    } 
+}
 
 
 /***/ })

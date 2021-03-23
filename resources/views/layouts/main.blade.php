@@ -10,7 +10,6 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}" />
 
     {{ $style ?? ''}} 

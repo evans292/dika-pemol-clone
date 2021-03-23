@@ -72,7 +72,7 @@
 
           <ul class="md:flex-col md:min-w-full flex flex-col list-none">
             <li class="items-center">
-              <x-side-link href="#" active="">
+              <x-side-link :href="route('presence.index')" :active="request()->routeIs('presence.index')">
                 <i class="far fa-clock mr-2 text-sm " ></i>
                 {{ __('Absen') }}
               </x-side-link>
