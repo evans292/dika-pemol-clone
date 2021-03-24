@@ -6694,11 +6694,6 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-webcam-easy@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/webcam-easy/-/webcam-easy-1.0.5.tgz#67b4f20848317ab0e9b8513878b8fe31163cdc91"
-  integrity sha512-YSXB21kfnwdrlPX/u1O5r8pbHxCaw3bsxhmvS1S9ixK/8n8LzxOduylqwVUSjYGSVJRhopJUN77SOh3Z0QgaIQ==
-
 webpack-cli@^4.1.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-4.5.0.tgz#b5213b84adf6e1f5de6391334c9fa53a48850466"

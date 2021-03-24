@@ -3,7 +3,6 @@ require('./bootstrap');
 require('alpinejs');
 
 import * as Popper from '@popperjs/core';
-import Webcam from 'webcam-easy';
 
 import Vue from "vue";
 import VueToast from 'vue-toast-notification';
@@ -65,43 +64,8 @@ window.failed = function(args)
        })    
 }
 
-// ============= WEBCAM EASY =====================================
-const webcamElement = document.getElementById('webcam');
-const canvasElement = document.getElementById('canvas');
-const snapSoundElement = document.getElementById('snapSound');
-const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
 
-window.start = function(args) 
-{
-    webcam.start()
-    .then(result =>{
-      console.log("webcam started");
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
 
-window.capture = function(args) 
-{
-    let picture = webcam.snap();
-    document.querySelector('#pic').src = picture;
-}
-
-window.stop = function (args) 
-{
-    webcam.stop()
-}
-
-window.save = function(params) 
-{
-    var base64image = document.getElementById("pic").src;
-
-    Webcam.upload( base64image, "{{ route('presence.snap') }}", function(code, text) {
-    console.log('Save successfully');
-    //console.log(text);
-    });
-}
 
 
 
