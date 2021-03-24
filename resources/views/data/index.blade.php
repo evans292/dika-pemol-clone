@@ -104,10 +104,9 @@
                         {{ $datas->links() }}
                       </div>
                       </div>
+                  </div>
                 </div>
             </div>
-        </div>
-    </div>
 
     <x-slot name="script">
       @if (session('success'))

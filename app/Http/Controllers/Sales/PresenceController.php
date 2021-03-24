@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Sales;
 
-use App\Http\Controllers\Controller;
+use DateTime;
+use App\Models\Presence;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PresenceController extends Controller
 {
@@ -15,12 +19,8 @@ class PresenceController extends Controller
     public function index()
     {
         //
-        return view('presence.index');
-    }
-
-    public function tes()
-    {
-        return dd("mengontol");
+        $data = Presence::where('tanggal', date('Y-m-d'))->where('user_id', Auth::user()->id)->first();
+        return view('presence.index', compact('data'));
     }
 
     /**
@@ -31,6 +31,7 @@ class PresenceController extends Controller
     public function create()
     {
         //
+        return view('presence.create');
     }
 
     /**
@@ -42,6 +43,26 @@ class PresenceController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'pic' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $name_slug = Str::slug(request('name'));
+        $datetime = new DateTime();
+
+        $picture = $request->file('pic');
+        $pictureUrl = $picture->storeAs("images/presence", "{$name_slug}-{$datetime->format('Y-m-d-s')}.{$picture->extension()}");
+        
+        Presence::create([
+            'user_id' => $request->user_id,
+            'tanggal' => $request->tanggal,
+            'absen_pagi' => $request->absen,
+            'latitude' => $request->lat,
+            'longitude' => $request->long,
+            'pic' => $pictureUrl,
+        ]);
+
+        return redirect()->route('presence.index')->with('success', 'lol');
     }
 
     /**

@@ -17,8 +17,11 @@ class CreatePresencesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->date('tanggal');
-            $table->time('jam');
-            
+            $table->time('absen_pagi');
+            $table->time('closing')->nullable();
+            $table->float('latitude');
+            $table->float('longitude');
+            $table->string('pic')->nullable();
             $table->timestamps();
         });
     }
