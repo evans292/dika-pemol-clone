@@ -20,7 +20,8 @@ class PresenceController extends Controller
     {
         //
         $data = Presence::where('tanggal', date('Y-m-d'))->where('user_id', Auth::user()->id)->first();
-        return view('presence.index', compact('data'));
+        $datas = Presence::paginate(10);
+        return view('presence.index', compact('data', 'datas'));
     }
 
     /**
@@ -62,7 +63,7 @@ class PresenceController extends Controller
             'pic' => $pictureUrl,
         ]);
 
-        return redirect()->route('presence.index')->with('success', 'lol');
+        return redirect()->route('presence.index')->with('create', 'lol');
     }
 
     /**
@@ -71,9 +72,10 @@ class PresenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Presence $presence)
     {
         //
+        return view('presence.show', compact('presence'));
     }
 
     /**
@@ -82,9 +84,10 @@ class PresenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Presence $presence)
     {
         //
+        return view('presence.edit', compact('presence'));
     }
 
     /**
@@ -94,9 +97,16 @@ class PresenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Presence $presence)
     {
         //
+        $presence->update([
+            'latitude' => $request->lat,
+            'longitude' => $request->long,
+            'closing' => $request->closing
+        ]);
+
+        return redirect()->route('presence.index')->with('update', 'lol');
     }
 
     /**

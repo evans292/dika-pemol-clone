@@ -17,13 +17,21 @@
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h1 id="time" class="text-2xl font-bold"></h1>
+                    <div>
+                    <i class="fas fa-sun text-yellow-400"></i>
+                    <span>Masuk : Paling terlambat pukul 08.00</span>
+                    </div>
+                    <div>
+                    <i class="fas fa-cloud-sun text-red-400"></i>
+                    <span>Closing : Mulai pukul 17.00</span>
+                    </div>
                     <div id="mapid"></div>
 
                     <div class="bg-white pb-4 px-4 rounded-md w-full">
                         <div class="flex justify-between w-full pt-6 ">
                           <h1 class="p-1 text-xl font-semibold">Tabel Presensi Hari Ini</h1>
                           <div>
-                            @if (date('H:i') === '08:00')
+                            @if (date('H:i') <= '08:00')
                             <a href="{{ route('presence.create') }}" class="inline-flex items-center px-4 py-2 bg-yellow-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"><i class="fas fa-sun mr-1"></i>Absen pagi</a>
                             @else
                             <a href="#" class="inline-flex items-center px-4 py-2 bg-gray-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"><i class="fas fa-sun mr-1"></i>Absen pagi</a>
@@ -31,12 +39,11 @@
                           </div>
                     </div>
                     </div>
-                    @if ($data->count() !== 0)
+                    @if ($data !== null)
                     <div class="overflow-x-auto mt-6">
                         <table class="table-auto border-collapse w-full">
                           <thead>
                             <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
-                              <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">#</th>
                               <th class="px-4 py-2 " style="background-color:#f8f8f8">Nama Sales</th>
                               <th class="px-4 py-2 " style="background-color:#f8f8f8">Tanggal</th>
                               <th class="px-4 py-2 " style="background-color:#f8f8f8">Absen Pagi</th>
@@ -45,9 +52,7 @@
                             </tr>
                           </thead>
                           <tbody class="text-sm font-normal text-gray-700">
-                            {{-- @foreach ($datas as $data) --}}
-                            <tr class="hover:bg-gray-100 border-b border-gray-200 py-10">
-                              <td class="px-4 py-4">1</td>    
+                            <tr class="hover:bg-gray-100 border-b border-gray-200 py-10">  
                               <td class="px-4 py-4">{{ $data->user->name }}</td>    
                               <td class="px-4 py-4">{{ $data->tanggal }}</td> 
                               <td class="px-4 py-4">{{ $data->absen_pagi }}</td> 
@@ -67,11 +72,8 @@
                                 @endif  
                               </td>
                             </tr>
-                            {{-- @endforeach --}}
                           </tbody>
                         </table>
-
-                        {{-- {{ $datas->links() }} --}}
                       </div> 
                     @else
                     <div class="text-center">
@@ -87,15 +89,73 @@
         </div>
     </div>
 
+    @if ($datas->count() !== 0)
+    <div class="py-6">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
+              <div class="p-6 bg-white border-b border-gray-200">
+
+                  <div class="bg-white pb-4 px-4 rounded-md w-full">
+                      <div class="flex justify-between w-full pt-6 ">
+                        <h1 class="p-1 text-xl font-semibold">Tabel Presensi</h1>
+                      </div>
+                  </div>
+                  <div class="overflow-x-auto mt-6">
+                      <table class="table-auto border-collapse w-full">
+                        <thead>
+                          <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
+                            <th class="px-4 py-2 bg-gray-200 " style="background-color:#f8f8f8">#</th>
+                            <th class="px-4 py-2 " style="background-color:#f8f8f8">Nama Sales</th>
+                            <th class="px-4 py-2 " style="background-color:#f8f8f8">Tanggal</th>
+                            <th class="px-4 py-2 " style="background-color:#f8f8f8">Absen Pagi</th>
+                            <th class="px-4 py-2 " style="background-color:#f8f8f8">Closing</th>
+                            <th class="px-4 py-2 " style="background-color:#f8f8f8">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-sm font-normal text-gray-700">
+                          @foreach ($datas as $data)
+                          <tr class="hover:bg-gray-100 border-b border-gray-200 py-10">
+                            <td class="px-4 py-4">{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</td>    
+                            <td class="px-4 py-4">{{ $data->user->name }}</td>    
+                            <td class="px-4 py-4">{{ $data->tanggal }}</td> 
+                            <td class="px-4 py-4">{{ $data->absen_pagi }}</td> 
+                            <td class="px-4 py-4">
+                              @if ($data->closing === null)
+                                  belum
+                              @else
+                                  {{ $data->closing  }}
+                              @endif
+                            </td> 
+                            <td class="px-4 py-4">
+                              <a href="{{ route('presence.show', ['presence' => $data->id]) }}"><i class="fas fa-eye text-blue-400"></i></a>
+                            </td>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+
+                      {{ $datas->links() }}
+                    </div> 
+              </div>
+          </div>
+      </div>
+  </div>
+  @endif
 
     <x-slot name="script">
         <script src="{{ asset('js/leaflet.js') }}"></script>
-        @if (session('success'))
+        @if (session('create'))
           <script>
               document.addEventListener('DOMContentLoaded', function() { 
                   success("Absen berhasil")
               }, true); 
           </script>
+        @elseif(session('update'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() { 
+                success("Closing berhasil")
+            }, true); 
+        </script>
         @endif
         <script>
             // ============ clock ==========================

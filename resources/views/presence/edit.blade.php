@@ -1,6 +1,6 @@
 <x-main-layout>
     <x-slot name="title">
-            {{ __('Absen Pagi') }}
+            {{ __('Closing') }}
     </x-slot>
     <x-slot name="style">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -17,26 +17,32 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="mb-4">
                     <div id="mapid"></div>
-                        <form action="{{ route('presence.store') }}" method="post" class="mt-5" novalidate enctype="multipart/form-data">
-                            @csrf                            
+                        <form action="{{ route('presence.update', ['presence' => $presence->id]) }}" method="post" class="mt-5" novalidate enctype="multipart/form-data">
+                            @csrf  
+                            @method('patch')                          
                             <div class="mb-4">
                                 <x-label for="user_id" :value="__('Id Sales')" />
-                                <x-input id="user_id" class="block mt-1 w-full bg-gray-50" type="text" value="{{ Auth::user()->id }}" name="user_id"  readonly/>
+                                <x-input id="user_id" class="block mt-1 w-full bg-gray-50" type="text" value="{{ $presence->user_id }}" name="user_id"  readonly/>
                                 <x-validation-message name="user_id"/>
                             </div>
                             <div class="mb-4">
                                 <x-label for="tanggal" :value="__('Tanggal')" />
-                                <x-input id="tanggal" class="block mt-1 w-full bg-gray-50" type="text" value="{{ date('Y-m-d') }}" name="tanggal"  readonly/>
+                                <x-input id="tanggal" class="block mt-1 w-full bg-gray-50" type="text" value="{{ $presence->tanggal }}" name="tanggal"  readonly/>
                                 <x-validation-message name="tanggal"/>
                             </div>
                             <div class="mb-4">
                                 <x-label for="absen" :value="__('Absen Pagi')" />
-                                <x-input id="absen" class="block mt-1 w-full bg-gray-50" type="text" value="{{ date('H:i:s') }}" name="absen"  readonly/>
+                                <x-input id="absen" class="block mt-1 w-full bg-gray-50" type="text" value="{{ $presence->absen_pagi }}" name="absen"  readonly/>
                                 <x-validation-message name="absen"/>
                             </div>
                             <div class="mb-4">
+                                <x-label for="closing" :value="__('Closing')" />
+                                <x-input id="closing" class="block mt-1 w-full bg-gray-50" type="text" value="{{ date('H:i:s') }}" name="closing"  readonly/>
+                                <x-validation-message name="closing"/>
+                            </div>
+                            <div class="mb-4">
                                 <x-label for="lat" :value="__('Latitude')" />
-                                <x-input id="lat" class="block mt-1 w-full bg-gray-50" type="text" name="lat"  readonly/>
+                                <x-input id="lat" class="block mt-1 w-full bg-gray-50" type="text"  name="lat"  readonly/>
                                 <x-validation-message name="lat"/>
                             </div>
                             <div class="mb-4">
@@ -44,14 +50,9 @@
                                 <x-input id="long" class="block mt-1 w-full bg-gray-50" type="text" name="long" readonly/>
                                 <x-validation-message name="long"/>
                             </div>
-                            <div class="mb-4">
-                                <x-label for="pic" :value="__('Selfie')" />
-                                <input id="pic" class="block mt-1 w-full" type="file" name="pic" capture="user" accept="image/*"/>
-                                <x-validation-message name="pic"/>
-                            </div>
                             <div class="flex items-center justify-end mt-4">            
                                 <x-button class="ml-3">
-                                    {{ __('Absen') }}
+                                    {{ __('Close') }}
                                 </x-button>
                             </div>
                         </form>
