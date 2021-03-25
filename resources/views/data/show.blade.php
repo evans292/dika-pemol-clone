@@ -7,13 +7,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <i class="far fa-credit-card"></i> No. Rekening : {{ $data->no_rek }}
+                    <i class="far fa-credit-card text-indigo-400"></i> No. Rekening : {{ $data->no_rek }}
                     <br>
                     <br>
-                    <i class="fas fa-calendar-alt mr-1"></i> Tanggal Input : {{ $data->tanggal }}
+                    <i class="fas fa-calendar-alt mr-1 text-blue-400"></i> Tanggal Input : {{ $data->tanggal }}
                     <br>
                     <br>
-                    <i class="fas fa-user mr-1"></i> Nama Sales : {{ $data->user->name }}
+                    <i class="far fa-user mr-1 text-green-400"></i> Nama Sales : {{ $data->user->name }}
                 </div>
             </div>
         </div>

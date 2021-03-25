@@ -21,6 +21,8 @@ class CreatePresencesTable extends Migration
             $table->time('closing')->nullable();
             $table->float('latitude');
             $table->float('longitude');
+            $table->float('latitude_sore')->nullable();
+            $table->float('longitude_sore')->nullable();
             $table->string('pic')->nullable();
             $table->timestamps();
         });

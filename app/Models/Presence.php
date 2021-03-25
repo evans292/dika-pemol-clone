@@ -13,7 +13,9 @@ class Presence extends Model
         'tanggal',
         'absen_pagi',
         'latitude',
+        'latitude_sore',
         'longitude',
+        'longitude_sore',
         'closing',
         'pic'
     ];

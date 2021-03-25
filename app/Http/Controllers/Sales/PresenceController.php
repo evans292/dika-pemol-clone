@@ -101,8 +101,8 @@ class PresenceController extends Controller
     {
         //
         $presence->update([
-            'latitude' => $request->lat,
-            'longitude' => $request->long,
+            'latitude_sore' => $request->lat,
+            'longitude_sore' => $request->long,
             'closing' => $request->closing
         ]);
 

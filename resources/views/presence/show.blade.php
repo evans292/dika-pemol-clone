@@ -9,6 +9,7 @@
         
         <style>
             #mapid { height: 200px; }
+            #mapid2 { height: 200px; }
         </style>
     </x-slot>
     <div class="py-6">
@@ -17,25 +18,33 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div id="mapid"></div>
                     <br>
-                        <img src="{{ asset('storage') . '/' . $presence->pic }}" alt="" class="w-1/2 h-1/2">
+                    <div id="mapid2"></div>
+                    <br>
+                        <img src="{{ asset('storage') . '/' . $presence->pic }}" alt="" class="w-1/4 h-1/4 rounded-full">
                     <br>
                     <br>
-                    <i class="far fa-user mr-1"></i> Nama Sales : {{ $presence->user->name }}
+                    <i class="far fa-user mr-1 text-green-400"></i> Nama Sales : {{ $presence->user->name }}
                     <br>
                     <br>
-                    <i class="fas fa-calendar-alt mr-1"></i> Tanggal : {{ $presence->tanggal }}
+                    <i class="fas fa-calendar-alt mr-1 text-blue-400"></i> Tanggal : {{ $presence->tanggal }}
                     <br>
                     <br>
-                    <i class="fas fa-sun mr-1"></i> Absen Pagi : {{ $presence->absen_pagi }}
+                    <i class="fas fa-sun mr-1 text-yellow-400"></i> Absen Pagi : {{ $presence->absen_pagi }}
                     <br>
                     <br>
-                    <i class="fas fa-cloud-sun mr-1"></i> Closing  : {{ $presence->closing }}
+                    <i class="fas fa-cloud-sun mr-1 text-red-400"></i> Closing  : {{ $presence->closing }}
                     <br>
                     <br>
-                    <i class="fas fa-map-marker-alt mr-1"></i> Latitude  : {{ $presence->latitude }}
+                    {{-- <i class="fas fa-map-marker-alt mr-1 text-yellow-400"></i> Latitude Pagi  : {{ $presence->latitude }}
                     <br>
                     <br>
-                    <i class="fas fa-map-marker-alt mr-1"></i> Longitude  : {{ $presence->longitude }}
+                    <i class="fas fa-map-marker-alt mr-1 text-yellow-400"></i> Longitude Pagi  : {{ $presence->longitude }}
+                    <br>
+                    <br>
+                    <i class="fas fa-map-marker-alt mr-1 text-red-400"></i> Latitude Sore  : {{ $presence->latitude_sore }}
+                    <br>
+                    <br>
+                    <i class="fas fa-map-marker-alt mr-1 text-red-400"></i> Longitude Sore  : {{ $presence->longitude_sore }} --}}
                 </div>
             </div>
         </div>
@@ -61,7 +70,24 @@
             }).addTo(mymap);
             }
 
+            function showPosition2() {
+                let mymap = L.map('mapid2').setView([{{ $presence->latitude_sore }}, {{ $presence->longitude_sore }}], 13);
+                let marker = L.marker([{{ $presence->latitude_sore }}, {{ $presence->longitude_sore }}]).addTo(mymap);
+                
+                marker.bindPopup("<b>Posisi mu saat closing.</b>").openPopup();
+
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'pk.eyJ1IjoidHViYWd1c2dmIiwiYSI6ImNrbW41d294ZTFsd3Eyd3J3MnJnYzI2b2MifQ.WWWGizDgm95hPzgAPSm7eQ'
+            }).addTo(mymap);
+            }
+
             showPosition()
+            showPosition2()
         </script>
     </x-slot>
 </x-main-layout>
