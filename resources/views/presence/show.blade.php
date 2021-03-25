@@ -17,6 +17,9 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div id="mapid"></div>
                     <br>
+                        <img src="{{ asset('storage') . '/' . $presence->pic }}" alt="" class="w-1/2 h-1/2">
+                    <br>
+                    <br>
                     <i class="far fa-user mr-1"></i> Nama Sales : {{ $presence->user->name }}
                     <br>
                     <br>
