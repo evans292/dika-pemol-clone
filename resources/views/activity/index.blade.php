@@ -83,7 +83,7 @@
                             <div class="ml-12">
                                 <!-- Trigger the Modal -->
                                 @foreach ($data->pics as $item)
-                                <img id="myImg{{ $item->id }}" src="{{ asset('storage') . '/' . $item->pic }}" onclick="modal('myImg{{ $item->id }}')" alt="Activity" style="width:100%;max-width:300px" class="rounded-sm cursor-pointer transition-all hover:opacity-70 mb-5">
+                                <img id="myImg{{ $item->id }}" src="{{ asset('storage') . '/' . $item->pic }}" onclick="modal('myImg{{ $item->id }}')" alt="Activity" class="rounded-sm cursor-pointer transition-all hover:opacity-70 mb-5 h-1/2 w-1/2">
                                 @endforeach
                             </div>
                           </li> 
