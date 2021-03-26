@@ -99,7 +99,7 @@
               
               <li class="items-center">
                 <x-side-link :href="route('data.id-card')" :active="request()->routeIs('data.id-card')">
-                  <i class="fas fa-id-card mr-2 text-sm " ></i>
+                  <i class="fas fa-id-card mr-1 text-sm " ></i>
                   {{ __('Id Card') }}
                 </x-side-link>
               </li>
@@ -111,14 +111,14 @@
             <h6
               class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
             >
-              Aktivitas
+              Aktifitas
             </h6>
             <!-- Navigation -->
 
           <ul class="md:flex-col md:min-w-full flex flex-col list-none">
             <li class="items-center">
-              <x-side-link href="#" active="">
-                <i class="fas fa-users mr-2 text-sm " ></i>
+              <x-side-link :href="route('activity.index')" :active="request()->routeIs('activity.index')">
+                <i class="fas fa-users mr-1 text-sm " ></i>
                 {{ __('Aktifitas Pemol') }}
               </x-side-link>
             </li>

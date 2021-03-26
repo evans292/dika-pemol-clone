@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Sales\ActivityController;
 use App\Http\Controllers\Sales\DataController;
 use App\Http\Controllers\Sales\PresenceController;
 use App\Models\Data;
@@ -33,9 +34,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('id-card', [DataController::class, 'showIdCard'])->name('data.id-card');
 
-    Route::resource('presence', PresenceController::class)->except([
-        'tes'
-    ]);
-    Route::get('snap', [DataController::class, 'tes'])->name('presence.snap');
-
+    Route::resource('presence', PresenceController::class);
+    Route::resource('activity', ActivityController::class);
 });

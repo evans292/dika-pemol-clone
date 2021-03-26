@@ -48,7 +48,7 @@ class PresenceController extends Controller
             'pic' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        $name_slug = Str::slug(request('name'));
+        $name_slug = Str::slug(Auth::user()->name);
         $datetime = new DateTime();
 
         $picture = $request->file('pic');
