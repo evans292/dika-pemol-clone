@@ -1,6 +1,6 @@
 <x-main-layout>
     <x-slot name="title">
-            Detail - {{ $data->no_rek }}
+          Hasil Pemol
     </x-slot>
     <x-slot name="style">
         <style>
@@ -64,23 +64,16 @@
             }
         </style>
     </x-slot>
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <i class="far fa-credit-card text-indigo-400"></i> No. Rekening : {{ $data->no_rek }}
-                    <br>
-                    <br>
-                    <i class="fas fa-calendar-alt mr-1 text-blue-400"></i> Tanggal Input : {{ $data->tanggal->format('Y-m-d') }}
-                    <br>
-                    <br>
-                    <i class="far fa-user mr-1 text-green-400"></i> Nama Sales : {{ $data->user->name }}
-                    <hr class="my-5">
                     <div class="relative w-1/2 m-8">
                         <div class="border-r-2 border-blue-500 absolute h-full top-0" style="left: 15px"></div>
                         
                        
                         <ul class="list-none m-0 p-0">
+                        @foreach ($datas as $data)
                         <li class="mb-2">
                             <div class="flex items-center mb-1">
                               <div class="bg-blue-500 rounded-full h-8 w-8"></div>
@@ -93,16 +86,19 @@
                                 @endforeach
                             </div>
                           </li> 
+                        @endforeach 
                         </ul>
                         
                       </div>
+
+                      {{ $datas->links() }}
                 </div>
             </div>
         </div>
     </div>
 
-      <!-- The Modal -->
-      <div id="myModal" class="modal">
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
 
         <!-- The Close Button -->
         <span class="close" onclick="closeModal()">&times;</span>

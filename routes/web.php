@@ -29,10 +29,11 @@ require __DIR__.'/auth.php';
 
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('data', DataController::class)->except([
-        'showIdCard'
+        'showIdCard', 'showAllResult'
     ]);
 
     Route::get('id-card', [DataController::class, 'showIdCard'])->name('data.id-card');
+    Route::get('result', [DataController::class, 'showAllResult'])->name('data.result');
 
     Route::resource('presence', PresenceController::class);
     Route::resource('activity', ActivityController::class);

@@ -124,7 +124,7 @@
             </li>
             
             <li class="items-center">
-              <x-side-link href="#" active="">
+              <x-side-link :href="route('data.result')" :active="request()->routeIs('data.result')">
                 <i class="fas fa-grin-wink mr-2 text-sm " ></i>
                 {{ __('Hasil Pemol') }}
               </x-side-link>

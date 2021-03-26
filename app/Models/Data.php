@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Data extends Model
 {
     use HasFactory;
-
+    protected $dates = ['tanggal'];
     protected $fillable = [
         'no_rek',
         'tanggal',
@@ -18,5 +18,10 @@ class Data extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function pics()
+    {
+        return $this->hasMany(Datapic::class);
     }
 }

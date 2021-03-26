@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Sales;
 
+use DateTime;
 use App\Models\Data;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Datapic;
 use Illuminate\Support\Facades\Auth;
 
 class DataController extends Controller
@@ -54,14 +57,34 @@ class DataController extends Controller
     {
         //
         $request->validate([
-            'rekening' => 'required'
+            'rekening' => 'required',
+            'pics' => 'required'
         ]);
 
-        Data::create([
+        $data = Data::create([
             'no_rek' => $request->rekening,
             'tanggal' => date('Y-m-d'),
             'user_id' => Auth::user()->id
         ]);
+
+        if ($request->hasfile('pics')) {
+            $pics = $request->file('pics');
+
+            $name_slug = Str::slug(Auth::user()->name);
+            $datetime = new DateTime();
+
+            $i = 0;
+            foreach($pics as $pic) {
+                $i++;
+                $name = $pic->getClientOriginalName();
+                $pictureUrl = $pic->storeAs("images/data", "{$name_slug}{$i}-{$datetime->format('Y-m-d-s')}.{$pic->extension()}");
+
+                Datapic::create([
+                    'data_id' => $data->id,
+                    'pic' => $pictureUrl
+                  ]);
+            }
+         }
 
         return redirect()->route('data.index')->with('success', 'lol');
     }
@@ -115,5 +138,11 @@ class DataController extends Controller
     public function showIdCard()
     {
         return view('data.id-card');
+    }
+
+    public function showAllResult()
+    {
+        $datas = Data::orderBy('tanggal', 'desc')->paginate(2);
+        return view('data.result', compact('datas'));
     }
 }
