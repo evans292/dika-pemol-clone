@@ -52,3 +52,6 @@ npm run dev / yarn dev
 ```
 php artisan serve
 ```
+## User
+username = P1207376
+password = devan123
