@@ -22,10 +22,16 @@ class DataController extends Controller
     {
         //
         $datas = null;
+        $searchs = null;
         if ($request->tgl1 !== null) {
             $datas = Data::whereBetween('tanggal', [$request->tgl1, $request->tgl2])->paginate(10);
         } else if ($request->key !== null) {
-            $datas =  DB::table('data')
+            $datas = DB::table('data')
+            ->join('users', 'users.id', '=', 'data.user_id')        
+            ->where('no_rek', 'like', "%$request->key%")
+            ->select('users.*', 'data.*')
+            ->paginate(10);
+            $searchs =  DB::table('data')
                     ->join('users', 'users.id', '=', 'data.user_id')        
                     ->where('no_rek', 'like', "%$request->key%")
                     ->select('users.*', 'data.*')
@@ -33,7 +39,7 @@ class DataController extends Controller
         } else {
             $datas = Data::orderBy('created_at', 'desc')->paginate(10);
         } 
-        return view('data.index', compact('datas'));
+        return view('data.index', compact('datas', 'searchs'));
     }
 
     /**

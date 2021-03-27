@@ -65,7 +65,7 @@
                               </td> 
                               <td class="px-4 py-4">
                                 <a href="{{ route('presence.show', ['presence' => $data->id]) }}"><i class="fas fa-eye text-blue-400"></i></a>
-                                @if (date('H:i') >= '17:00' && $data->closing === null)
+                                @if (date('H:i') !== '17:00' && $data->closing === null)
                                   <a href="{{ route('presence.edit', ['presence' => $data->id]) }}"><i class="fas fa-cloud-sun text-red-400"></i></a>
                                 @else
                                 <a href="#"><i class="fas fa-cloud-sun text-gray-400"></i></a>                           

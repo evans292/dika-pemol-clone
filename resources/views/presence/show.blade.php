@@ -20,7 +20,7 @@
                     <br>
                     <div id="mapid2"></div>
                     <br>
-                        <img src="{{ asset('storage') . '/' . $presence->pic }}" alt="" class="w-1/4 h-1/4 rounded-full">
+                        <img src="{{ asset('storage') . '/' . $presence->pic }}" alt="" class="w-1/4 h-1/4 rounded-md">
                     <br>
                     <br>
                     <i class="far fa-user mr-1 text-green-400"></i> Nama Sales : {{ $presence->user->name }}

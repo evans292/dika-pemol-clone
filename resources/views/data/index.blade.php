@@ -87,7 +87,11 @@
                             <tr class="hover:bg-gray-100 border-b border-gray-200 py-10">
                               <td class="px-4 py-4">{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</td>    
                               <td class="px-4 py-4">{{ $data->no_rek }}</td>    
+                              @if ($searchs !== null)
+                              <td class="px-4 py-4">{{ $data->tanggal }}</td> 
+                              @else
                               <td class="px-4 py-4">{{ $data->tanggal->format('Y-m-d') }}</td> 
+                              @endif
                               @if ($data->name !== null)
                               <td class="px-4 py-4">{{ $data->name }} ({{ $data->username }})</td>    
                               @else 
