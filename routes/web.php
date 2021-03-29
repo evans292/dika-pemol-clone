@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Sales\ActivityController;
 use App\Http\Controllers\Sales\DataController;
 use App\Http\Controllers\Sales\PresenceController;
@@ -28,13 +29,24 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::resource('data', DataController::class)->except([
-        'showIdCard', 'showAllResult'
-    ]);
+    Route::group(['middleware' => 'role:admin'], function() {
+        Route::get('performance', [AdminController::class, 'showPerformance'])->name('performance');
+    });
 
-    Route::get('id-card', [DataController::class, 'showIdCard'])->name('data.id-card');
-    Route::get('result', [DataController::class, 'showAllResult'])->name('data.result');
 
-    Route::resource('presence', PresenceController::class);
-    Route::resource('activity', ActivityController::class);
+    Route::group(['middleware' => 'role:petugas'], function() {
+        Route::resource('data', DataController::class)->except([
+            'showIdCard', 'showAllResult'
+        ]);
+    
+        Route::get('id-card', [DataController::class, 'showIdCard'])->name('data.id-card');
+        Route::get('result', [DataController::class, 'showAllResult'])->name('data.result');
+    
+        Route::resource('presence', PresenceController::class);
+        Route::resource('activity', ActivityController::class);
+    });
+
+
+
+
 });

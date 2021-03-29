@@ -60,6 +60,28 @@
               </li>
             </ul>
 
+            @can('admin')
+                <!-- Divider -->
+              <hr class="my-4 md:min-w-full" />
+              <!-- Heading -->
+              <h6
+                class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+              >
+                Performa Pegawai
+              </h6>
+              <!-- Navigation -->
+
+            <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+              <li class="items-center">
+                <x-side-link :href="route('performance')" :active="request()->routeIs('performance')">
+                  <i class="fas fa-users mr-2 text-sm " ></i>
+                  {{ __('Pegawai') }}
+                </x-side-link>
+              </li>
+            </ul>
+            @endcan
+
+            @can('petugas')
             <!-- Divider -->
             <hr class="my-4 md:min-w-full" />
             <!-- Heading -->
@@ -130,6 +152,7 @@
               </x-side-link>
             </li>
           </ul>
+          @endcan
 
                   <!-- Divider -->
                   <hr class="my-4 md:min-w-full" />
