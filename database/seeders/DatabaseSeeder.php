@@ -36,6 +36,38 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('devan123'),
         ]);
 
+        User::create([
+            'name' => 'Ariya Indriyanto',
+            'role_id' => 2,
+            'username' => 'P1207377',
+            'email' => 'ariya@example.com',
+            'password' => Hash::make('devan123'),
+        ]);
+
+        User::create([
+            'name' => 'Erwin Kosasih',
+            'role_id' => 2,
+            'username' => 'P1207378',
+            'email' => 'erwin@example.com',
+            'password' => Hash::make('devan123'),
+        ]);
+
+        User::create([
+            'name' => 'Azis David',
+            'role_id' => 2,
+            'username' => 'P1207379',
+            'email' => 'azis@example.com',
+            'password' => Hash::make('devan123'),
+        ]);
+
+        User::create([
+            'name' => 'Achmad Syawal',
+            'role_id' => 2,
+            'username' => 'P1207380',
+            'email' => 'jb@example.com',
+            'password' => Hash::make('devan123'),
+        ]);
+
 
     }
 }

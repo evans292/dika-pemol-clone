@@ -25,12 +25,17 @@
                             @foreach ($datas as $data)
                             <tr class="hover:bg-gray-100 border-b border-gray-200 py-10">
                               <td class="px-4 py-4">{{ $loop->iteration }}</td>    
-                              <td class="px-4 py-4">{{ $data->name }}</td>    
-                              <td class="px-4 py-4">{{ $data->total }}</td>    
+                              <td class="px-4 py-4">{{ $data->name }}</td>  
+                              @if ($data->data->count() !== 0)
+                              <td class="px-4 py-4">{{ $data->data->count() }} orang</td>    
+                              @else
+                              <td class="px-4 py-4">Belum ada</td>  
+                              @endif  
                             </tr>
                             @endforeach
                           </tbody>
                         </table>
+                      {{ $datas->links() }}
                       </div>
                   </div>
                 </div>
