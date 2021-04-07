@@ -29,10 +29,10 @@
                     <i class="fas fa-calendar-alt mr-1 text-blue-400"></i> Tanggal : {{ $presence->tanggal }}
                     <br>
                     <br>
-                    <i class="fas fa-sun mr-1 text-yellow-400"></i> Absen Pagi : {{ $presence->absen_pagi }}
+                    <i class="fas fa-sun mr-1 text-yellow-400"></i> Absen Pagi : {{ $presence->absen_pagi }} ({{ ($presence->absen_pagi <= '08:00:00') ? 'Tepat waktu' : 'Terlambat' }})
                     <br>
                     <br>
-                    <i class="fas fa-cloud-sun mr-1 text-red-400"></i> Closing  : {{ $presence->closing }}
+                    <i class="fas fa-cloud-sun mr-1 text-red-400"></i> Closing  : {{ ($presence->closing == null) ? 'belum' : $presence->closing}}
                     <br>
                     <br>
                     {{-- <i class="fas fa-map-marker-alt mr-1 text-yellow-400"></i> Latitude Pagi  : {{ $presence->latitude }}

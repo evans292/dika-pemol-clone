@@ -31,7 +31,7 @@
                         <div class="flex justify-between w-full pt-6 ">
                           <h1 class="p-1 text-xl font-semibold">Tabel Presensi Hari Ini</h1>
                           <div>
-                            @if (date('H:i') <= '08:00' && $data === null)
+                            @if ($data === null)
                             <a href="{{ route('presence.create') }}" class="inline-flex items-center px-4 py-2 bg-yellow-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"><i class="fas fa-sun mr-1"></i>Absen pagi</a>
                             @else
                             <a href="#" class="inline-flex items-center px-4 py-2 bg-gray-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"><i class="fas fa-sun mr-1"></i>Absen pagi</a>
@@ -55,7 +55,7 @@
                             <tr class="hover:bg-gray-100 border-b border-gray-200 py-10">  
                               <td class="px-4 py-4">{{ $data->user->name }}</td>    
                               <td class="px-4 py-4">{{ $data->tanggal }}</td> 
-                              <td class="px-4 py-4">{{ $data->absen_pagi }}</td> 
+                              <td class="px-4 py-4">{{ $data->absen_pagi }} ({{ ($data->absen_pagi <= '08:00:00') ? 'Tepat waktu' : 'Terlambat' }})</td>
                               <td class="px-4 py-4">
                                 @if ($data->closing === null)
                                     belum
@@ -118,7 +118,7 @@
                             <td class="px-4 py-4">{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</td>    
                             <td class="px-4 py-4">{{ $data->user->name }}</td>    
                             <td class="px-4 py-4">{{ $data->tanggal }}</td> 
-                            <td class="px-4 py-4">{{ $data->absen_pagi }}</td> 
+                            <td class="px-4 py-4">{{ $data->absen_pagi }} ({{ ($data->absen_pagi <= '08:00:00') ? 'Tepat waktu' : 'Terlambat' }})</td>
                             <td class="px-4 py-4">
                               @if ($data->closing === null)
                                   belum
